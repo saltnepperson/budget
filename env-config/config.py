@@ -9,3 +9,5 @@ API_HOST = 'localhost'
 API_PATH = '/api/'
 
 BASE_URL = 'http://{}:{}{}'.format(API_HOST, API_PORT, API_PATH)
+
+DEBUG = True

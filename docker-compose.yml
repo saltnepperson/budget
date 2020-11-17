@@ -15,6 +15,21 @@ services:
       - ./db/postgres_data:/var/lib/postgres
     networks:
       - budget
+  
+  budget-api:
+    container_name: budget-api
+    build: .
+    volumes:
+      - type: bind
+        source: ./docker
+        target: /usr/local/app/budget/docker
+      - type: bind
+        source: ./env-config
+        target: /usr/local/app/env-config/config.py
+    depends_on: 
+      - postgres
+    ports:
+      - 5000:5000
 
 networks:
   budget:

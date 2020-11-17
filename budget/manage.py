@@ -13,5 +13,8 @@ def drop_db():
     """ Drop the databases """
     db.drop_all()
 
-if __name__ == "__main__":
+def main():
     manager.run()
+
+if __name__ == "__main__":
+    main()

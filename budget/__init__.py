@@ -5,7 +5,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-
 db = SQLAlchemy()
 
 # Get that environment configuration
@@ -16,6 +15,8 @@ else:
     configFile = dirname(dirname(__file__))
     configFile = join(configFile, 'env-config')
     configFile = join(configFile, 'config.py')
+
+    print(configFile)
 
     if isfile(configFile):
         app.config.from_pyfile(configFile)
