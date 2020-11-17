@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  postgres:
+    container_name: budget-db
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: thisisasecurepassword
+      POSTGRES_USER: budget_user
+      POSTGRES_DB: budget_dev
+    volumes:
+      - ./db/postgres_data:/var/lib/postgres
+    networks:
+      - budget
+
+networks:
+  budget:
+    driver: bridge
