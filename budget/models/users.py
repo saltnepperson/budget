@@ -1,4 +1,3 @@
-from flask_sqlalchemy import SQLALchemy
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Unicode, Text
 from sqlalchemy.orm import relationship
 from budget import app, db
@@ -24,7 +23,6 @@ class User(db.Model):
     last_updated = Column(DateTime())
 
     # Relationships 
-    budgets = relationship("Bugets")
 
     def __init__(self, first_name, last_name, email, username, password, middle_name=None, last_login=None, last_updated=None):
         self.first_name = first_name
