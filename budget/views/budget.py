@@ -37,9 +37,8 @@ class BudgetPostList(Resource):
         budget = Budget(
             name=args.get('name'),
             description=args.get('description'),
-            type=args.get('type'),
-            created_by=args.get('created_by'),
-            created_at=datetime.datetime.utcnow
+            category=args.get('category'),
+            created_by=args.get('created_by')
         )
 
         result = schema.dump(budget.create())
@@ -68,10 +67,10 @@ class BudgetGetPutDelete(Resource):
             budget_to_update.name = args.get('name')
         if args.get('description'):
             budget_to_update.description = args.get('description')
-        if args.get('type'):
-            budget_to_update.type = args.get('type')
+        if args.get('category'):
+            budget_to_update.category = args.get('category')
         
-        budget_to_update.updated_at = datetime.datetime.utcnow
+        budget_to_update.updated_at = datetime.datetime.utcnow()
 
         budget = schema.dump(budget_to_update.update())
 
@@ -83,4 +82,4 @@ class BudgetGetPutDelete(Resource):
 
         budget_to_delete.delete()
 
-        return 204
+        return budget_to_delete, 204

@@ -15,6 +15,6 @@ BUDGET_FIELDS = {
     'id': fields.Integer,
     'name': fields.String,
     'description': fields.String,
-    'type': fields.String,
+    'category': fields.String,
     'created_by': fields.Integer
 }

@@ -1,5 +1,7 @@
+import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Unicode, Text
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from marshmallow import Schema, fields
 from budget import app, db
 from budget.models.users import User
@@ -18,7 +20,7 @@ class Budget(db.Model):
 
     # This can be expanded upon as it's own model
     # i.e. "Monthly Budget", "House Repairs", etc.
-    type = db.Column(db.String(50))
+    category = db.Column(db.String(50))
 
     # Relationships
     created_by = db.Column(
@@ -28,13 +30,13 @@ class Budget(db.Model):
     )
     
     # timestamps
-    created_at = db.Column(db.DateTime)
-    updated_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, server_default=func.now())
+    updated_at = db.Column(db.DateTime, onupdate=func.now())
 
-    def __init__(self, name, created_by, description=None, type=None, created_at=None, updated_at=None):
+    def __init__(self, name, created_by, description=None, category=None, created_at=None, updated_at=None):
         self.name = name
         self.description = description
-        self.type = type
+        self.category = category
         self.created_by = created_by
         self.created_at = created_at
         self.updated_at = updated_at
@@ -71,7 +73,7 @@ class BudgetSchema(Schema):
     id = fields.Number(dump_only=True)
     name = fields.String(required=True)
     description = fields.String()
-    type = fields.String()
+    category = fields.String()
     created_by = fields.Number()
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)
