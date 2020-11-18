@@ -10,7 +10,7 @@ class User(db.Model):
     __tablename__ = 'users'
 
     # Basic user info
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(50), nullable=False)
     middle_name = db.Column(db.String(50), nullable=True)
     last_name = db.Column(db.String(50), nullable=False)
@@ -36,4 +36,10 @@ class User(db.Model):
 
     def __str__(self):
         return '<User id=%s email=%s>' % (self.id, self.email)
+
+    def create(self):
+        db.session.add(self)
+        db.session.commit()
+
+        return self
 

@@ -7,6 +7,7 @@ from os.path import dirname, join, isfile
 
 app = Flask(__name__)
 db = SQLAlchemy()
+db.init_app(app)
 
 # Get that environment configuration
 configFile = dirname(dirname(__file__))
