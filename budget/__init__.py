@@ -12,7 +12,11 @@ db.init_app(app)
 # Get that environment configuration
 configFile = dirname(dirname(__file__))
 configFile = join(configFile, 'env-config')
-configFile = join(configFile, 'config.py')
+
+if (app.env == 'testing'):
+    configFile = join(configFile, 'test-config.py')
+else:
+    configFile = join(configFile, 'config.py')
 
 if isfile(configFile):
     app.config.from_pyfile(configFile)

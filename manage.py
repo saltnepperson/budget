@@ -15,7 +15,6 @@ migrate = Migrate(app, db)
 @click.argument('password')
 def seedUsers(**kwargs):
     from budget.models.users import User
-    print(kwargs)
     user = User(
             first_name=kwargs['first_name'],
             last_name=kwargs['last_name'], 
