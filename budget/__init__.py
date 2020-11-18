@@ -16,8 +16,6 @@ else:
     configFile = join(configFile, 'env-config')
     configFile = join(configFile, 'config.py')
 
-    print(configFile)
-
     if isfile(configFile):
         app.config.from_pyfile(configFile)
     else:
