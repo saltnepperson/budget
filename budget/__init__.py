@@ -24,5 +24,7 @@ else:
 from flask_restful import Api
 api = Api(app)
 
-from budget.views.user import UserList
-api.add_resource(UserList, '/api/users')
+from budget.views.user import UserPostList
+from budget.views.user import UserGetPutDelete
+api.add_resource(UserPostList, '/api/users')
+api.add_resource(UserGetPutDelete, '/api/users/<int:id>')

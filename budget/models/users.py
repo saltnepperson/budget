@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Unicode, Text
 from sqlalchemy.orm import relationship
+from marshmallow import Schema, fields
 from budget import app, db
 
 # The users table stores all of the budget applications users
@@ -43,3 +44,29 @@ class User(db.Model):
 
         return self
 
+    def update(self):
+        db.session.add(self)
+        db.session.commit()
+        db.session.refresh(self)
+
+        return self
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+        return self
+
+class UserSchema(Schema):
+
+    class Meta(Schema.Meta):
+        model = User
+        sqla_session = db.session
+    
+    id = fields.Number(dump_only=True)
+    first_name = fields.String(required=True)
+    middle_name = fields.String()
+    last_name = fields.String(required=True)
+    email = fields.String(required=True)
+    username = fields.String(required=True)
+    password = fields.String(required=True)
