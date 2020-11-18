@@ -36,7 +36,7 @@ class User(db.Model):
         self.last_updated = last_updated
 
     def __str__(self):
-        return '<User id=%s email=%s>' % (self.id, self.email)
+        return '%s' % self
 
     def create(self):
         db.session.add(self)

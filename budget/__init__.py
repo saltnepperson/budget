@@ -32,3 +32,8 @@ from budget.views.user import UserPostList
 from budget.views.user import UserGetPutDelete
 api.add_resource(UserPostList, '/api/users')
 api.add_resource(UserGetPutDelete, '/api/users/<int:id>')
+
+from budget.views.budget import BudgetPostList
+from budget.views.budget import BudgetGetPutDelete
+api.add_resource(BudgetPostList, '/api/budgets')
+api.add_resource(BudgetGetPutDelete, '/api/budgets/<int:id>')
