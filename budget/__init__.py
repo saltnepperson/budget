@@ -3,9 +3,11 @@ import stat
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate, MigrateCommand
 from os.path import dirname, join, isfile
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 # Get that environment configuration
 def create_app(config_file=None):
@@ -32,7 +34,7 @@ def create_app(config_file=None):
 # This is where we intialize extensions that rely on the app
 def initialize_extensions(app):
     db.init_app(app)
-
+    migrate.init_app(app, db)
 
 ### Flask API ###
 def register_resources(app):
