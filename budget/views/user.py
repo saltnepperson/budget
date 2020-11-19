@@ -59,7 +59,7 @@ class UserGetPutDelete(Resource):
     def put(self, id):
 
         user_schema = UserSchema()
-        args = user_schema.load(request.get_json())
+        args = request.get_json(force=True)
 
         user_to_update = User.query.get(id)
 

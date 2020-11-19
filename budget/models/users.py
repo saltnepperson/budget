@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Unicode, Text
 from sqlalchemy.orm import relationship
 from marshmallow import Schema, fields
-from budget import app, db
+from budget import db
 
 # The users table stores all of the budget applications users
 class User(db.Model):

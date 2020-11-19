@@ -18,3 +18,12 @@ BUDGET_FIELDS = {
     'category': fields.String,
     'created_by': fields.Integer
 }
+
+BUDGET_ITEM_FIELDS = {
+    'id': fields.Integer,
+    'name': fields.String,
+    'description': fields.String,
+    'category': fields.String,
+    'budget_id': fields.Integer,
+    'created_by': fields.Integer
+}

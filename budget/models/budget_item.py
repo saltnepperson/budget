@@ -4,31 +4,42 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from marshmallow import Schema, fields
 from budget import db
+from budget.models.budget import Budget
 from budget.models.users import User
 
-# The budget model stores all of a users budgets
-class Budget(db.Model):
+# The BudgetItem model stores ledger item data for each budget
+class BudgetItem(db.Model):
     """
-    Represents a budget app user's budget.
+    Represents a budget item.
     """
-    __tablename__ = 'budgets'
+    __tablename__ = 'budget_items'
 
-    # Basic user info
+    # Basic info
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.Text)
 
-    # The total amount allocated for a budget
-    amount = db.Column(db.Integer, default=0)
+    # This represents a ledger amount (12.45) or 12.45
+    # Think in accounting terms
+    # This value will be used to determine if the user is going over budget
+    amount = db.Column(db.Integer)
 
     # This can be expanded upon as it's own model
     # i.e. "Monthly Budget", "House Repairs", etc.
     category = db.Column(db.String(50))
 
     # Relationships
+    budget_id = db.Column(
+        db.Integer,
+        db.ForeignKey(Budget.id, ondelete='CASCADE'),
+        nullable=False
+    )
+
+    # User that created the item, open for collaboration if 
+    # multiple users want to work on the same budget
     created_by = db.Column(
         db.Integer,
-        db.ForeignKey(User.id, ondelete='CASCADE'),
+        db.ForeignKey(User.id),
         nullable=False
     )
     
@@ -36,11 +47,12 @@ class Budget(db.Model):
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, onupdate=func.now())
 
-    def __init__(self, name, created_by, amount=0, description=None, category=None, created_at=None, updated_at=None):
+    def __init__(self, name, budget_id, created_by, amount=0, description=None, category=None, created_at=None, updated_at=None):
         self.name = name
         self.description = description
         self.category = category
         self.amount = amount
+        self.budget_id = budget_id
         self.created_by = created_by
         self.created_at = created_at
         self.updated_at = updated_at
@@ -68,18 +80,17 @@ class Budget(db.Model):
 
         return self
 
-# Budget Schema
-class BudgetSchema(Schema):
+class BudgetItemSchema(Schema):
 
     class Meta(Schema.Meta):
-        model = Budget
+        model = BudgetItem
         sqla_session = db.session
     
     id = fields.Number(dump_only=True)
     name = fields.String(required=True)
     description = fields.String()
     category = fields.String()
-    amount = fields.Number()
+    budget_id = fields.Number()
     created_by = fields.Number()
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)
