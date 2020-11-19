@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Unicode, Text
 from sqlalchemy.orm import relationship
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, validate
 from budget import db
 
 # The users table stores all of the budget applications users
@@ -64,9 +64,9 @@ class UserSchema(Schema):
         sqla_session = db.session
     
     id = fields.Number(dump_only=True)
-    first_name = fields.String(required=True)
-    middle_name = fields.String()
-    last_name = fields.String(required=True)
-    email = fields.String(required=True)
-    username = fields.String(required=True)
-    password = fields.String(required=True)
+    first_name = fields.String(required=True, validate=validate.Length(max=50))
+    middle_name = fields.String(validate=validate.Length(max=50))
+    last_name = fields.String(required=True, validate=validate.Length(max=50))
+    email = fields.Email(required=True)
+    username = fields.String(required=True, validate=validate.Length(max=120))
+    password = fields.String(required=True, validate=validate.Length(min=8, max=255))
