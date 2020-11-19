@@ -11,7 +11,11 @@ setup(
     version='0.0.1',
     long_description=__doc__,
     packages=find_packages(exclude=["tests"]),
-    data_files=[('env-config', ['env-config/config.py'])],
+    data_files=[('config', [
+        'config/local-config.py',
+        'config/docker-config.py',
+        'config/test-config.py'
+    ])],
     zip_safe=False,
     install_requires=INSTALL_REQUIRED,
     include_package_data=True,
@@ -22,7 +26,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'budgetapp = budget.manage:main',
+            'budgetapp = budget.manage:run_docker',
         ],
     }
 )

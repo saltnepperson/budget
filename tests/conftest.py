@@ -3,12 +3,12 @@ import tempfile
 
 import pytest
 
-from budget import create_app, db
+from budget import app, db
 from budget.models.users import User
 
 @pytest.fixture(scope='module')
 def api_client():
-    flask_app = create_app('test-config.py')
+    flask_app = app
 
     with flask_app.test_client() as client:
         with flask_app.app_context():

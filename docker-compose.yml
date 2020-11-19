@@ -21,15 +21,14 @@ services:
     build: .
     volumes:
       - type: bind
-        source: ./docker
-        target: /usr/local/app/budget/docker
-      - type: bind
-        source: ./env-config
-        target: /usr/local/app/env-config/config.py
+        source: ./config
+        target: /usr/local/app/config/
     depends_on: 
       - postgres
     ports:
       - 5000:5000
+    networks:
+      - budget
 
 networks:
   budget:
