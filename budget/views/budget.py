@@ -5,7 +5,6 @@ from flask_restful import reqparse, marshal_with, Resource
 from budget.models.budget import Budget, BudgetSchema
 from budget.views import BUDGET_FIELDS
 
-# List all of the users
 class BudgetPostList(Resource):
 
     def __init__(self):
@@ -27,7 +26,7 @@ class BudgetPostList(Resource):
 
         return results.items, 200
     
-    @marshal_with(BUDGET_FIELDS, envelope='user')
+    @marshal_with(BUDGET_FIELDS, envelope='budget')
     def post(self):
 
         schema = BudgetSchema()

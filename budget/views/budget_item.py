@@ -5,7 +5,6 @@ from flask_restful import reqparse, marshal_with, Resource
 from budget.models.budget_item import BudgetItem, BudgetItemSchema
 from budget.views import BUDGET_ITEM_FIELDS
 
-# List all of the users
 class BudgetItemPostList(Resource):
 
     def __init__(self):
