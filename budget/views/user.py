@@ -87,4 +87,4 @@ class UserGetPutDelete(Resource):
 
         user_to_delete.delete()
 
-        return 204
+        return {}, 204

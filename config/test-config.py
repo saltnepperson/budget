@@ -9,14 +9,7 @@ DATABASE_DB = 'budget_test'
 DATABASE_PASSWORD = 'thisisasecurepassword'
 DATABASE_USER = 'budget_user'
 
-SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}'.format(
-    DATABASE_HOST,
-    DATABASE_USER,
-    DATABASE_PASSWORD,
-    DATABASE_URL,
-    DATABASE_PORT,
-    DATABASE_DB
-)
+SQLALCHEMY_DATABASE_URI = 'sqlite:///tmp/test.db'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Api configuration
