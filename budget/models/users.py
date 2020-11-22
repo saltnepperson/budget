@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Unicode, Text
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from marshmallow import Schema, fields, validate
 from budget import db
 
@@ -20,10 +21,8 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     
     # Tracking information
-    last_login = Column(DateTime())
-    last_updated = Column(DateTime())
-
-    # Relationships 
+    last_login =  db.Column(db.DateTime, server_default=func.now())
+    last_updated =  db.Column(db.DateTime, onupdate=func.now())
 
     def __init__(self, first_name, last_name, email, username, password, middle_name=None, last_login=None, last_updated=None):
         self.first_name = first_name
@@ -36,7 +35,7 @@ class User(db.Model):
         self.last_updated = last_updated
 
     def __str__(self):
-        return '%s' % self
+        return '<%s>' % self
 
     def create(self):
         db.session.add(self)

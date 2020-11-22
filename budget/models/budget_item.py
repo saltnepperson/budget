@@ -4,8 +4,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from marshmallow import Schema, fields
 from budget import db
-from budget.models.budget import Budget
-from budget.models.users import User
+from budget.models.budget import BudgetSchema
 
 # The BudgetItem model stores ledger item data for each budget
 class BudgetItem(db.Model):
@@ -29,19 +28,13 @@ class BudgetItem(db.Model):
     category = db.Column(db.String(50))
 
     # Relationships
-    budget_id = db.Column(
-        db.Integer,
-        db.ForeignKey(Budget.id, ondelete='CASCADE'),
-        nullable=False
-    )
+    budget_id = db.Column(db.Integer, db.ForeignKey('budgets.id'), nullable=False)
+    
 
     # User that created the item, open for collaboration if 
     # multiple users want to work on the same budget
-    created_by = db.Column(
-        db.Integer,
-        db.ForeignKey(User.id),
-        nullable=False
-    )
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
     
     # timestamps
     created_at = db.Column(db.DateTime, server_default=func.now())
@@ -90,7 +83,7 @@ class BudgetItemSchema(Schema):
     name = fields.String(required=True)
     description = fields.String()
     category = fields.String()
-    budget_id = fields.Number()
+    budget_id = fields.Nested(BudgetSchema, only=['name', 'amount','id'])
     created_by = fields.Number()
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)

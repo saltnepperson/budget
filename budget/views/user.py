@@ -29,8 +29,9 @@ class UserPostList(Resource):
     @marshal_with(USER_FIELDS, envelope='user')
     def post(self):
 
+        data = request.get_json()
         user_schema = UserSchema()
-        args = user_schema.load(request.get_json())
+        args = user_schema.load()
 
         # User create fields
         user = User(
