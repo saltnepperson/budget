@@ -23,10 +23,5 @@ setup(
         'tests': [
             'pytest==3.4.2'
         ]
-    },
-    entry_points={
-        'console_scripts': [
-            'budgetapp = budget.manage:run_docker',
-        ],
     }
 )
