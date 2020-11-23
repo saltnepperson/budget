@@ -23,7 +23,14 @@ BUDGET_FIELDS = {
     'name': fields.String,
     'description': fields.String,
     'category': fields.String,
-    'created_by': fields.Integer
+    'created_by': fields.Integer,
+    'budget_items': fields.Nested({
+        'id': fields.Integer,
+        'name': fields.String,
+        'description': fields.String,
+        'category': fields.String,
+        'amount': fields.Integer
+    })
 }
 
 BUDGET_ITEM_FIELDS = {
