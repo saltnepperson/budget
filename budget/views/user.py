@@ -19,6 +19,7 @@ class UserPostList(Resource):
         parser.add_argument('page', type=int, default=1, location='args')
         parser.add_argument('first_name', type=str, default=None, location='args')
         parser.add_argument('last_name', type=str, default=None, location='args')
+        parser.add_argument('email', type=str, default=None, location='args')
 
         args = parser.parse_args()
 
@@ -28,6 +29,8 @@ class UserPostList(Resource):
             query = query.filter_by(first_name=args.first_name)
         if args.last_name is not None:
             query = query.filter_by(last_name=args.last_name)
+        if args.email is not None:
+            query = query.filter_by(email=args.email)
 
         results = query.paginate(args.page, args.count)
 

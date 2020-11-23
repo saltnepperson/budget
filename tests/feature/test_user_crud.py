@@ -53,3 +53,17 @@ class TestUserCrud:
         assert data['users'] is not None
         assert data['users'][0]['first_name'] == test_user.first_name
         assert data['users'][0]['id'] == test_user.id
+
+    def test_user_list_filter_by_last_name(self, api_client, test_user):
+        response = api_client.get('/api/users?last_name={}'.format(test_user.last_name))
+        data = response.get_json()
+        assert data['users'] is not None
+        assert data['users'][0]['last_name'] == test_user.last_name
+        assert data['users'][0]['id'] == test_user.id
+
+    def test_user_list_filter_by_email(self, api_client, test_user):
+        response = api_client.get('/api/users?email={}'.format(test_user.email))
+        data = response.get_json()
+        assert data['users'] is not None
+        assert data['users'][0]['email'] == test_user.email
+        assert data['users'][0]['id'] == test_user.id
