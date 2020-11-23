@@ -35,14 +35,19 @@ services:
     container_name: localstack
     ports:
       - 4566-4599:4566-4599
-      - 9000:9000
+      - 8081:8081
     environment:
-      - SERVICES=kinesis
+      - SERVICES=kinesis,s3,sqs
       - DEFAULT_REGION=us-east-1
       - PORT_WEB_UI=9000
       - START_WEB=1
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
     networks:
       - budget
+    volumes:
+      - /tmp/localstack:/tmp/localstack
+      - /tmp/localstack/run/docker.sock:/var/run/docker.sock
 
 networks:
   budget:
