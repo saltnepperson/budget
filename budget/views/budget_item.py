@@ -36,6 +36,7 @@ class BudgetItemPostList(Resource):
         budget_item = BudgetItem(
             name=args.get('name'),
             description=args.get('description'),
+            amount=args.get('amount'),
             category=args.get('category'),
             budget_id=args.get('budget_id'),
             created_by=args.get('created_by')
