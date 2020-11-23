@@ -25,9 +25,9 @@ class UserPostList(Resource):
         query = User.query
 
         if args.first_name is not None:
-            query.filter_by(first_name=args.first_name)
+            query = query.filter_by(first_name=args.first_name)
         if args.last_name is not None:
-            query.filter_by(last_name=args.last_name)
+            query = query.filter_by(last_name=args.last_name)
 
         results = query.paginate(args.page, args.count)
 
@@ -39,7 +39,7 @@ class UserPostList(Resource):
         data = request.get_json()
 
         user_schema = UserSchema()
-        args = user_schema.load()
+        args = user_schema.load(data)
 
         # User create fields
         user = User(
