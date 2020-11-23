@@ -30,6 +30,20 @@ services:
     networks:
       - budget
 
+  localstack:
+    image: localstack/localstack
+    container_name: localstack
+    ports:
+      - 4566-4599:4566-4599
+      - 9000:9000
+    environment:
+      - SERVICES=kinesis
+      - DEFAULT_REGION=us-east-1
+      - PORT_WEB_UI=9000
+      - START_WEB=1
+    networks:
+      - budget
+
 networks:
   budget:
     driver: bridge
