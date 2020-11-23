@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from marshmallow import Schema, fields, validate
 from budget import db
+from budget.models.budget import BudgetSchema
 
 # The users table stores all of the budget applications users
 class User(db.Model):
@@ -20,6 +21,9 @@ class User(db.Model):
     username = db.Column(db.String(120), unique=True, nullable=False, index=True)
     password = db.Column(db.String(255), nullable=False)
     
+    # Relationships
+    budgets = db.relationship('Budget', backref='User', cascade="all, delete-orphan")
+
     # Tracking information
     last_login =  db.Column(db.DateTime, server_default=func.now())
     last_updated =  db.Column(db.DateTime, onupdate=func.now())
@@ -69,3 +73,4 @@ class UserSchema(Schema):
     email = fields.Email(required=True)
     username = fields.String(required=True, validate=validate.Length(max=120))
     password = fields.String(required=True, validate=validate.Length(min=8, max=255))
+    budgets = fields.Nested(BudgetSchema, many=True, only=['id','name','description','amount','category'])

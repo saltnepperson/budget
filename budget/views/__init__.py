@@ -8,7 +8,14 @@ USER_FIELDS = {
     'middle_name': fields.String,
     'last_name': fields.String,
     'email': fields.String,
-    'username': fields.String
+    'username': fields.String,
+    'budgets': fields.Nested({
+        'id': fields.Integer,
+        'name': fields.String,
+        'description': fields.String,
+        'category': fields.String,
+        'amount': fields.Integer
+    })
 }
 
 BUDGET_FIELDS = {

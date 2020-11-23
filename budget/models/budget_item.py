@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from marshmallow import Schema, fields
 from budget import db
-from budget.models.budget import BudgetSchema
 
 # The BudgetItem model stores ledger item data for each budget
 class BudgetItem(db.Model):
@@ -82,8 +81,9 @@ class BudgetItemSchema(Schema):
     id = fields.Number(dump_only=True)
     name = fields.String(required=True)
     description = fields.String()
+    amount = fields.Integer()
     category = fields.String()
-    budget_id = fields.Nested(BudgetSchema, only=['name', 'amount','id'])
+    budget_id = fields.Integer()
     created_by = fields.Number()
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)

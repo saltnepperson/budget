@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from marshmallow import Schema, fields
 from budget import db
-from budget.models.users import UserSchema
+from budget.models.budget_item import BudgetItemSchema
 
 # The budget model stores all of a users budgets
 class Budget(db.Model):
@@ -27,6 +27,7 @@ class Budget(db.Model):
     category = db.Column(db.String(50))
 
     # Relationships
+    budget_items = db.relationship('BudgetItem', backref='Budget', cascade="all, delete-orphan")
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     
     # timestamps
@@ -76,7 +77,8 @@ class BudgetSchema(Schema):
     name = fields.String(required=True)
     description = fields.String()
     category = fields.String()
+    budget_items = fields.Nested(BudgetItemSchema, many=True, only=['id','name','description','amount','category'])
     amount = fields.Number()
-    created_by = fields.Nested(UserSchema, only=['first_name','last_name','id'])
+    created_by = fields.Integer()
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)
