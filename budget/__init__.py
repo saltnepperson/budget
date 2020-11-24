@@ -13,7 +13,6 @@ load_dotenv(find_dotenv())
 app = Flask(__name__)
 db = SQLAlchemy()
 migrate = Migrate()
-client = boto3.client('kinesis', endpoint_url='http://localhost:4566')
 
 configFile = dirname(dirname(__file__))
 configFile = join(configFile, 'config')
@@ -29,6 +28,7 @@ else:
 # This is where we intialize extensions that rely on the app
 db.init_app(app)
 migrate.init_app(app, db)
+client = boto3.client('kinesis', endpoint_url=app.config.get('LOCALSTACK_URI'), region_name='us-east-1')
 
 # Add stream to Kinesis if present, if not, create it and add a stream
 streams = client.list_streams()

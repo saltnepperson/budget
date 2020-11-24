@@ -23,8 +23,12 @@ services:
       - type: bind
         source: ./config
         target: /usr/local/app/config/
+      - type: bind
+        source: $HOME/.aws/credentials
+        target: /budget/.aws/credentials
     depends_on: 
       - postgres
+      - localstack
     ports:
       - 5000:5000
     networks:

@@ -8,6 +8,10 @@ DATABASE_DB = 'budget_dev'
 DATABASE_PASSWORD = 'thisisasecurepassword'
 DATABASE_USER = 'budget_user'
 
+LOCALSTACK_HOST='localhost'
+LOCALSTACK_PORT=4566
+LOCALSTACK_URI='http://{}:{}'.format(LOCALSTACK_HOST, LOCALSTACK_PORT)
+
 SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}'.format(
     DATABASE_HOST,
     DATABASE_USER,
